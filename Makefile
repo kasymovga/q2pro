@@ -52,6 +52,12 @@ LDFLAGS_s :=
 LDFLAGS_c :=
 LDFLAGS_g := -shared
 
+CONFIG_SDL2=y
+CONFIG_HTTP=y
+CONFIG_OPENAL=y
+CONFIG_JPEG=y
+CONFIG_PNG=y
+
 ifdef CONFIG_WINDOWS
     # Force i?86-netware calling convention on x86 Windows
     ifeq ($(CPU),x86)
@@ -259,7 +265,7 @@ OBJS_g := \
 
 ### Configuration Options ###
 
-ifdef CONFIG_HTTP
+ifeq ($(CONFIG_HTTP),y)
     CURL_CFLAGS ?= $(shell pkg-config libcurl --cflags)
     CURL_LIBS ?= $(shell pkg-config libcurl --libs)
     CFLAGS_c += -DUSE_CURL=1 $(CURL_CFLAGS)
@@ -278,7 +284,7 @@ ifndef CONFIG_NO_SOFTWARE_SOUND
     OBJS_c += src/client/sound/dma.o
 endif
 
-ifdef CONFIG_OPENAL
+ifeq ($(CONFIG_OPENAL),y)
     CFLAGS_c += -DUSE_OPENAL=1
     OBJS_c += src/client/sound/al.o
     ifdef CONFIG_FIXED_LIBAL
@@ -377,14 +383,14 @@ ifndef CONFIG_NO_TGA
     CFLAGS_c += -DUSE_TGA=1
 endif
 
-ifdef CONFIG_PNG
+ifeq ($(CONFIG_PNG),y)
     PNG_CFLAGS ?= $(shell libpng-config --cflags)
     PNG_LIBS ?= $(shell libpng-config --libs)
     CFLAGS_c += -DUSE_PNG=1 $(PNG_CFLAGS)
     LIBS_c += $(PNG_LIBS)
 endif
 
-ifdef CONFIG_JPEG
+ifeq ($(CONFIG_JPEG),y)
     JPG_CFLAGS ?=
     JPG_LIBS ?= -ljpeg
     CFLAGS_c += -DUSE_JPG=1 $(JPG_CFLAGS)
@@ -489,7 +495,7 @@ ifdef CONFIG_WINDOWS
     LIBS_s += -lws2_32 -lwinmm -ladvapi32
     LIBS_c += -lws2_32 -lwinmm
 else
-    ifdef CONFIG_SDL2
+    ifeq ($(CONFIG_SDL2),y)
         SDL_CFLAGS ?= $(shell sdl2-config --cflags)
         SDL_LIBS ?= $(shell sdl2-config --libs)
         CFLAGS_c += -DUSE_SDL=2 $(SDL_CFLAGS)
@@ -540,7 +546,7 @@ else
     endif
 
     ifndef CONFIG_NO_SOFTWARE_SOUND
-        ifdef CONFIG_SDL2
+		ifeq ($(CONFIG_SDL2),y)
             OBJS_c += src/unix/sdl2/sound.o
         else
             OBJS_c += src/unix/sdl/sound.o
