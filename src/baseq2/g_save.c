@@ -423,6 +423,7 @@ static const save_field_t gamefields[] = {
     I(num_items),
 
     I(autosaved),
+    SZ(spawnpoint, 512),
 
     {0}
 #undef _OFS
