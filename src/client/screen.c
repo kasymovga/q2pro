@@ -2055,7 +2055,7 @@ static void SCR_DrawFPS( void )
     }
 
     R_SetStringScale(scr_showfpsscale->value);
-    SCR_DrawString(scr_showfpsx->integer, scr_showfpsy->integer, 0, fps);
+    SCR_DrawString(scr_showfpsx->integer * scr.hud_scale, scr_showfpsy->integer * scr.hud_scale, 0, fps);
 	R_SetStringScale(1);
 }
 
@@ -2064,7 +2064,7 @@ static void SCR_DrawTime( void )
 	char time_string[10];
 	Q_strftime(time_string, 10, "%k:%M:%S");
     R_SetStringScale(scr_showtimescale->value);
-	SCR_DrawString(scr_showtimex->integer, scr_showtimey->integer, 0, time_string);
+	SCR_DrawString(scr_showtimex->integer * scr.hud_scale, scr_showtimey->integer * scr.hud_scale, 0, time_string);
     R_SetStringScale(1);
 }
 

@@ -153,19 +153,17 @@ clear:
 
 float R_ClampScale(cvar_t *var)
 {
-    if (!var)
-        return 1.0f;
+	int base;
+	float scale = 1;
+	base = r_config.height / 480;
+	if (base < 1)
+		base = 1;
 
-    if (var->value)
-        return 1.0f / Cvar_ClampValue(var, 1.0f, 10.0f);
+	scale = 1.0f / base;
+    if (var && var->value)
+		scale = scale * (1 / Cvar_ClampValue(var, 1.0f, 10.0f));
 
-    if (r_config.width * r_config.height >= 2560 * 1440)
-        return 0.25f;
-
-    if (r_config.width * r_config.height >= 1280 * 720)
-        return 0.5f;
-
-    return 1.0f;
+    return scale;
 }
 
 void R_SetScale(float scale)
