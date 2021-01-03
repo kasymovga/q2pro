@@ -292,8 +292,7 @@ qboolean SV_ParseMapCmd(mapcmd_t *cmd)
     // we go directly to nextserver because we don't support cinematics.
     ch = strchr(s, '+');
     if (ch) {
-        s = ch + 1;
-
+        do { s = ch + 1; } while ((ch = strchr(s, '+')));
         // skip the end-of-unit flag if necessary
         if (*s == '*') {
             s++;
