@@ -435,6 +435,7 @@ typedef struct {
 
 typedef struct {
     char            buffer[MAX_QPATH];
+    char            buffer_parsed[MAX_QPATH];
     char            *server;
     char            *spawnpoint;
     server_state_t  state;

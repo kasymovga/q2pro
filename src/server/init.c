@@ -279,7 +279,8 @@ qboolean SV_ParseMapCmd(mapcmd_t *cmd)
     qerror_t    ret;
     size_t      len;
 
-    s = cmd->buffer;
+    strcpy(cmd->buffer_parsed, cmd->buffer);
+    s = cmd->buffer_parsed;
 
     // skip the end-of-unit flag if necessary
     if (*s == '*') {
@@ -308,7 +309,7 @@ qboolean SV_ParseMapCmd(mapcmd_t *cmd)
         *ch = 0;
         cmd->spawnpoint = ch + 1;
     } else {
-        cmd->spawnpoint = cmd->buffer + strlen(cmd->buffer);
+        cmd->spawnpoint = cmd->buffer_parsed + strlen(cmd->buffer_parsed);
     }
 
     // now expand and try to load the map
