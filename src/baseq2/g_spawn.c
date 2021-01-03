@@ -588,8 +588,7 @@ void SpawnEntities(const char *mapname, const char *entities, const char *spawnp
     memset(g_edicts, 0, game.maxentities * sizeof(g_edicts[0]));
 
     strncpy(level.mapname, mapname, sizeof(level.mapname) - 1);
-    if (!game.autosaved)
-        strncpy(game.spawnpoint, spawnpoint, sizeof(game.spawnpoint) - 1);
+    strncpy(game.spawnpoint, spawnpoint, sizeof(game.spawnpoint) - 1);
 
     // set client fields on player ents
     for (i = 0 ; i < game.maxclients ; i++)
